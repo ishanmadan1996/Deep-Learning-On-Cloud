@@ -14,6 +14,7 @@ pip install -r requirements.txt
 ### Steps followed
 
 Directories:-
+
 '''
 data/ — Will have records and csv files.
 images/ — This directory will contain our dataset.
