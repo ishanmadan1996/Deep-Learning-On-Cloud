@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>29_of_the_Truest_Tumblr_Posts_All_About_Cats_Social2_1.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\29_of_the_Truest_Tumblr_Posts_All_About_Cats_Social2_1.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1200</width>
+		<height>627</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>89</xmin>
+			<ymin>116</ymin>
+			<xmax>449</xmax>
+			<ymax>423</ymax>
+		</bndbox>
+	</object>
+</annotation>

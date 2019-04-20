@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>150324154010_04_internet_cats_restricted_super_169.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\150324154010_04_internet_cats_restricted_super_169.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1100</width>
+		<height>619</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>265</xmin>
+			<ymin>18</ymin>
+			<xmax>822</xmax>
+			<ymax>450</ymax>
+		</bndbox>
+	</object>
+</annotation>

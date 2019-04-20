@@ -1,0 +1,26 @@
+<annotation>
+	<folder>dogs _ Google Search</folder>
+	<filename>082918_lh_crispr_beagles_feat_REV.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\dogs _ Google Search\082918_lh_crispr_beagles_feat_REV.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>860</width>
+		<height>460</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>237</xmin>
+			<ymin>27</ymin>
+			<xmax>580</xmax>
+			<ymax>398</ymax>
+		</bndbox>
+	</object>
+</annotation>

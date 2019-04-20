@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>000122_ZV_SCSW_HeroImages_1900x1024_D1.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\000122_ZV_SCSW_HeroImages_1900x1024_D1.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1900</width>
+		<height>1024</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>177</xmin>
+			<ymin>539</ymin>
+			<xmax>1828</xmax>
+			<ymax>1024</ymax>
+		</bndbox>
+	</object>
+</annotation>

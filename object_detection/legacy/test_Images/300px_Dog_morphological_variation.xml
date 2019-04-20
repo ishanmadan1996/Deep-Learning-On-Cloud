@@ -1,0 +1,38 @@
+<annotation>
+	<folder>dogs _ Google Search</folder>
+	<filename>300px_Dog_morphological_variation.png</filename>
+	<path>C:\Users\Ishan\Downloads\dogs _ Google Search\300px_Dog_morphological_variation.png</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>300</width>
+		<height>231</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>167</xmin>
+			<ymin>91</ymin>
+			<xmax>281</xmax>
+			<ymax>221</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>16</xmin>
+			<ymin>8</ymin>
+			<xmax>137</xmax>
+			<ymax>131</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>dogs _ Google Search</folder>
+	<filename>170803_MEDEX_SickDog.jpg.CROP.promo_xlarge2.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\dogs _ Google Search\170803_MEDEX_SickDog.jpg.CROP.promo_xlarge2.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1180</width>
+		<height>842</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>59</xmin>
+			<ymin>84</ymin>
+			<xmax>1113</xmax>
+			<ymax>711</ymax>
+		</bndbox>
+	</object>
+</annotation>

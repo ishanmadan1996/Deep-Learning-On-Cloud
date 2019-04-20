@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>101438745_cat_conjunctivitis_causes.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\101438745_cat_conjunctivitis_causes.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>2673</width>
+		<height>1797</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>111</xmin>
+			<ymin>90</ymin>
+			<xmax>2632</xmax>
+			<ymax>1797</ymax>
+		</bndbox>
+	</object>
+</annotation>

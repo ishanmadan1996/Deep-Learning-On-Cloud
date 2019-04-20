@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>55c906efdd0895b0558b45bc_750_563.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\55c906efdd0895b0558b45bc_750_563.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>750</width>
+		<height>563</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>139</xmin>
+			<ymin>4</ymin>
+			<xmax>747</xmax>
+			<ymax>563</ymax>
+		</bndbox>
+	</object>
+</annotation>

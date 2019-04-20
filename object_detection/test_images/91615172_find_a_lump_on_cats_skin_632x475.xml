@@ -1,0 +1,26 @@
+<annotation>
+	<folder>cats _ Google Search</folder>
+	<filename>91615172_find_a_lump_on_cats_skin_632x475.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\cats _ Google Search\91615172_find_a_lump_on_cats_skin_632x475.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>632</width>
+		<height>475</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cat</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>38</xmin>
+			<ymin>7</ymin>
+			<xmax>625</xmax>
+			<ymax>475</ymax>
+		</bndbox>
+	</object>
+</annotation>

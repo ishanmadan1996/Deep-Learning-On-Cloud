@@ -1,0 +1,38 @@
+<annotation>
+	<folder>dogs _ Google Search</folder>
+	<filename>27579948_547443672291161_4754606380961234944_n_5a70c2ac31283400364b124b.jpg</filename>
+	<path>C:\Users\Ishan\Downloads\dogs _ Google Search\27579948_547443672291161_4754606380961234944_n_5a70c2ac31283400364b124b.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>400</width>
+		<height>250</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>36</xmin>
+			<ymin>4</ymin>
+			<xmax>207</xmax>
+			<ymax>248</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>dog</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>178</xmin>
+			<ymin>1</ymin>
+			<xmax>400</xmax>
+			<ymax>245</ymax>
+		</bndbox>
+	</object>
+</annotation>
