@@ -11,12 +11,15 @@ git clone https://github.com/ishanmadan1996/Deep-Learning-On-Cloud.git
 pip install -r requirements.txt
 
 
-### Installing
+### Steps followed
 
+Directories:-
+'''
 data/ — Will have records and csv files.
 images/ — This directory will contain our dataset.
 training/ — In this directory we will save our trained model.
 eval/ — Will save results of evaluation on trained model.
+'''
 
 Step 1: Generating CSV files from Images
 The goal is to label the image and generate train.csv and test.csv files. The detailed explanation can be found:-
