@@ -1,0 +1,574 @@
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    api: default
+    ksonnet.io/component: application
+  name: applications.app.k8s.io
+spec:
+  group: app.k8s.io
+  names:
+    kind: Application
+    plural: applications
+    singular: application
+  scope: Namespaced
+  validation:
+    openAPIV3Schema:
+      properties:
+        apiVersion:
+          type: string
+        kind:
+          type: string
+        metadata:
+          type: object
+        spec:
+          properties:
+            components:
+              items:
+                type: object
+              type: array
+            dependencies:
+              items:
+                type: string
+              type: array
+            description:
+              type: string
+            healthCheck:
+              type: string
+            info:
+              items:
+                type: object
+              type: array
+            keywords:
+              items:
+                type: string
+              type: array
+            links:
+              items:
+                type: object
+              type: array
+            maintainers:
+              items:
+                type: string
+              type: array
+            owners:
+              items:
+                type: string
+              type: array
+            selector:
+              type: object
+            type:
+              type: string
+            version:
+              type: string
+          type: object
+        status:
+          properties:
+            installed:
+              items:
+                type: string
+              type: array
+            observedGeneration:
+              format: int64
+              type: string
+            ready:
+              type: string
+          type: object
+  version: v1beta1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    ksonnet.io/component: metacontroller
+  name: compositecontrollers.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: CompositeController
+    plural: compositecontrollers
+    shortNames:
+    - cc
+    - cctl
+    singular: compositecontroller
+  scope: Cluster
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    ksonnet.io/component: metacontroller
+  name: controllerrevisions.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: ControllerRevision
+    plural: controllerrevisions
+    singular: controllerrevision
+  scope: Namespaced
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  labels:
+    ksonnet.io/component: metacontroller
+  name: decoratorcontrollers.metacontroller.k8s.io
+spec:
+  group: metacontroller.k8s.io
+  names:
+    kind: DecoratorController
+    plural: decoratorcontrollers
+    shortNames:
+    - dec
+    - decorators
+    singular: decoratorcontroller
+  scope: Cluster
+  version: v1alpha1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    ksonnet.io/component: metacontroller
+  name: meta-controller-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: meta-controller-service
+  namespace: kubeflow
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    ksonnet.io/component: metacontroller
+  name: meta-controller-service
+  namespace: kubeflow
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  labels:
+    app: metacontroller
+    ksonnet.io/component: metacontroller
+  name: metacontroller
+  namespace: kubeflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metacontroller
+  serviceName: ""
+  template:
+    metadata:
+      labels:
+        app: metacontroller
+    spec:
+      containers:
+      - command:
+        - /usr/bin/metacontroller
+        - --logtostderr
+        - -v=4
+        - --discovery-interval=20s
+        image: metacontroller/metacontroller:v0.3.0
+        imagePullPolicy: Always
+        name: metacontroller
+        ports:
+        - containerPort: 2345
+        resources:
+          limits:
+            cpu: "4"
+            memory: 4Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: true
+      serviceAccountName: meta-controller-service
+---
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  labels:
+    app: application
+    app.kubernetes.io/name: application
+    ksonnet.io/component: application
+  name: application
+  namespace: kubeflow
+spec:
+  components:
+  - ambassador:
+      kind: Service
+  - ambassador-admin:
+      kind: Service
+  - ambassador:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - ambassador:
+      kind: ServiceAccount
+  - ambassador:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - ambassador:
+      group: extensions
+      kind: Deployment
+  - workflows.argoproj.io:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - workflow-controller:
+      group: extensions
+      kind: Deployment
+  - argo-ui:
+      group: extensions
+      kind: Deployment
+  - argo-ui:
+      kind: Service
+  - workflow-controller-configmap:
+      kind: ConfigMap
+  - argo:
+      kind: ServiceAccount
+  - argo:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - argo:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - argo-ui:
+      kind: ServiceAccount
+  - argo-ui:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - argo-ui:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - centraldashboard:
+      group: extensions
+      kind: Deployment
+  - centraldashboard:
+      kind: Service
+  - centraldashboard:
+      kind: ServiceAccount
+  - centraldashboard:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - jupyter-config:
+      kind: ConfigMap
+  - jupyter-0:
+      kind: Service
+  - jupyter:
+      group: apps
+      kind: StatefulSet
+  - jupyter-role:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - jupyter-notebook-role:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - jupyter-lb:
+      kind: Service
+  - jupyter:
+      kind: ServiceAccount
+  - jupyter-notebook:
+      kind: ServiceAccount
+  - jupyter-role:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+  - jupyter-notebook-role:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+  - vizier-core:
+      kind: Service
+  - vizier-core:
+      group: extensions
+      kind: Deployment
+  - vizier-db:
+      kind: Service
+  - katib-mysql:
+      kind: PersistentVolumeClaim
+  - vizier-db:
+      group: extensions
+      kind: Deployment
+  - vizier-db-secrets:
+      kind: Secret
+  - vizier-core:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - vizier-core:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - vizier-core:
+      kind: ServiceAccount
+  - vizier-core-rest:
+      kind: Service
+  - vizier-core-rest:
+      group: extensions
+      kind: Deployment
+  - katib-ui:
+      kind: Service
+  - katib-ui:
+      group: extensions
+      kind: Deployment
+  - katib-ui:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - katib-ui:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - katib-ui:
+      kind: ServiceAccount
+  - vizier-suggestion-random:
+      kind: Service
+  - vizier-suggestion-random:
+      group: extensions
+      kind: Deployment
+  - vizier-suggestion-grid:
+      kind: Service
+  - vizier-suggestion-grid:
+      group: extensions
+      kind: Deployment
+  - vizier-suggestion-hyperband:
+      kind: Service
+  - vizier-suggestion-hyperband:
+      group: extensions
+      kind: Deployment
+  - vizier-suggestion-bayesianoptimization:
+      kind: Service
+  - vizier-suggestion-bayesianoptimization:
+      group: extensions
+      kind: Deployment
+  - studyjobs.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - metrics-collector:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - metrics-collector:
+      kind: ServiceAccount
+  - metrics-collector:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - metricscollector-template:
+      kind: ConfigMap
+  - studyjob-controller:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - studyjob-controller:
+      kind: ServiceAccount
+  - studyjob-controller:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - studyjob-controller:
+      group: extensions
+      kind: Deployment
+  - worker-template:
+      kind: ConfigMap
+  - compositecontrollers.metacontroller.k8s.io:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - controllerrevisions.metacontroller.k8s.io:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - decoratorcontrollers.metacontroller.k8s.io:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - meta-controller-service:
+      kind: ServiceAccount
+  - meta-controller-cluster-role-binding:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - metacontroller:
+      group: apps
+      kind: StatefulSet
+  - notebooks.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - notebooks:
+      kind: Service
+  - notebooks:
+      kind: ConfigMap
+  - notebooks:
+      group: apps
+      kind: Deployment
+  - notebook-controller:
+      group: metacontroller.k8s.io
+      kind: CompositeController
+  - openvino:
+      kind: Service
+  - openvino:
+      group: apps
+      kind: Deployment
+  - minio-pv-claim:
+      kind: PersistentVolumeClaim
+  - minio-service:
+      kind: Service
+  - minio:
+      group: apps
+      kind: Deployment
+  - mlpipeline-minio-artifact:
+      kind: Secret
+  - mysql-pv-claim:
+      kind: PersistentVolumeClaim
+  - mysql:
+      kind: Service
+  - mysql:
+      group: apps
+      kind: Deployment
+  - ml-pipeline:
+      kind: ServiceAccount
+  - ml-pipeline:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+  - ml-pipeline:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - ml-pipeline:
+      kind: Service
+  - ml-pipeline:
+      group: apps
+      kind: Deployment
+  - pipeline-runner:
+      kind: ServiceAccount
+  - pipeline-runner:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - pipeline-runner:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - ml-pipeline-scheduledworkflow:
+      kind: ServiceAccount
+  - ml-pipeline-scheduledworkflow:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - ml-pipeline-scheduledworkflow:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - ml-pipeline-scheduledworkflow:
+      group: apps
+      kind: Deployment
+  - scheduledworkflows.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - ml-pipeline-persistenceagent:
+      kind: ServiceAccount
+  - ml-pipeline-persistenceagent:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - ml-pipeline-persistenceagent:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - ml-pipeline-persistenceagent:
+      group: apps
+      kind: Deployment
+  - ml-pipeline-ui:
+      kind: ServiceAccount
+  - ml-pipeline-ui:
+      kind: Service
+  - ml-pipeline-tensorboard-ui:
+      kind: Service
+  - ml-pipeline-ui:
+      group: rbac.authorization.k8s.io
+      kind: RoleBinding
+  - ml-pipeline-ui:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - ml-pipeline-ui:
+      group: apps
+      kind: Deployment
+  - profiles.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - permissions.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - profiles:
+      kind: Service
+  - view:
+      group: rbac.authorization.k8s.io
+      kind: Role
+  - profiles:
+      kind: ConfigMap
+  - profiles:
+      group: apps
+      kind: Deployment
+  - profiles-controller:
+      group: metacontroller.k8s.io
+      kind: CompositeController
+  - permissions-controller:
+      group: metacontroller.k8s.io
+      kind: CompositeController
+  - pytorch-operator-config:
+      kind: ConfigMap
+  - pytorch-operator:
+      kind: ServiceAccount
+  - pytorch-operator:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - pytorch-operator:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - pytorchjobs.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - pytorch-operator:
+      group: extensions
+      kind: Deployment
+  - spartakus:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - spartakus:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - spartakus:
+      kind: ServiceAccount
+  - spartakus-volunteer:
+      group: extensions
+      kind: Deployment
+  - tfjobs.kubeflow.org:
+      group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+  - tf-job-operator-v1beta1:
+      group: extensions
+      kind: Deployment
+  - tf-job-operator-config:
+      kind: ConfigMap
+  - tf-job-operator:
+      kind: ServiceAccount
+  - tf-job-operator:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - tf-job-operator:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  - tf-job-dashboard:
+      kind: Service
+  - tf-job-dashboard:
+      kind: ServiceAccount
+  - tf-job-dashboard:
+      group: extensions
+      kind: Deployment
+  - tf-job-dashboard:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRole
+  - tf-job-dashboard:
+      group: rbac.authorization.k8s.io
+      kind: ClusterRoleBinding
+  dependencies: []
+  description: ""
+  healthCheck: ""
+  info: []
+  keywords: []
+  links: []
+  maintainers: []
+  owners: []
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: application
+  type: kubeflow
+  version: "0.3"
